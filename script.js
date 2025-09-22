@@ -1,3 +1,40 @@
+const EVIDENCE_TRANSLATIONS = {
+    "EMF 5": "EMF niveau 5",
+    "Spirit Box": "Spirit Box",
+    "Writing": "Écriture fantomatique",
+    "DOTS": "Projecteur D.O.T.S.",
+    "Fingerprints": "Ultraviolet",
+    "Freezing": "Températures glaciales",
+    "Ghost Orb": "Orbe fantomatique"
+};
+
+const GHOST_NAMES_TRANSLATIONS = {
+    "Spirit": "Esprit",
+    "Wraith": "Spectre",
+    "Phantom": "Fantôme",
+    "Poltergeist": "Poltergeist",
+    "Banshee": "Banshee",
+    "Jinn": "Djinn",
+    "Mare": "Mare",
+    "Revenant": "Revenant",
+    "Shade": "Ombre",
+    "Demon": "Démon",
+    "Yurei": "Yurei",
+    "Oni": "Oni",
+    "Yokai": "Yokai",
+    "Hantu": "Hantu",
+    "Goryo": "Goryo",
+    "Myling": "Myling",
+    "Onryo": "Onryo",
+    "The Twins": "Les Jumeaux",
+    "Raiju": "Raiju",
+    "Obake": "Obake",
+    "The Mimic": "Le Mimique",
+    "Moroi": "Moroi",
+    "Deogen": "Deogen",
+    "Thaye": "Thaye"
+};
+
 const GHOSTS = [
     {
         name: "Spirit",
@@ -25,7 +62,7 @@ const GHOSTS = [
     },
     {
         name: "Phantom",
-        evidence: ["Spirit Box", "Fingerprints", "DOTS"],
+        evidence: ["Ghost Orb", "Fingerprints", "DOTS"],
         traits: ["Disparaît quand photographié", "Réduit la santé mentale", "Invisible"],
         hints: [
             "📸 Photo: Il disparaît quand tu le prends en photo",
@@ -49,7 +86,7 @@ const GHOSTS = [
     },
     {
         name: "Banshee",
-        evidence: ["EMF 5", "Fingerprints", "DOTS"],
+        evidence: ["Ghost Orb", "Fingerprints", "DOTS"],
         traits: ["Cible une personne", "Cri perçant", "Chasse à 50% santé mentale"],
         hints: [
             "🎯 Cible unique: Il se concentre sur un seul joueur",
@@ -61,7 +98,7 @@ const GHOSTS = [
     },
     {
         name: "Jinn",
-        evidence: ["EMF 5", "Fingerprints", "Freezing"],
+        evidence: ["Ghost Orb", "Fingerprints", "Freezing"],
         traits: ["Vitesse normale si fusible allumé", "Vitesse rapide si fusible éteint", "Peut couper l'électricité"],
         hints: [
             "⚡ Fusible: Il est plus rapide si le fusible est éteint",
@@ -97,7 +134,7 @@ const GHOSTS = [
     },
     {
         name: "Shade",
-        evidence: ["EMF 5", "Writing", "Freezing"],
+        evidence: ["Ghost Orb", "Writing", "Freezing"],
         traits: ["Timide", "Moins d'activité avec plusieurs personnes", "Chasse rare"],
         hints: [
             "😰 Timide: Il est moins actif quand vous êtes plusieurs",
@@ -121,7 +158,7 @@ const GHOSTS = [
     },
     {
         name: "Yurei",
-        evidence: ["Spirit Box", "Writing", "Freezing"],
+        evidence: ["Ghost Orb", "Writing", "Freezing"],
         traits: ["Réduit la santé mentale", "Ferme les portes", "Moins d'activité"],
         hints: [
             "🧠 Santé mentale: Il fait chuter ta santé mentale plus vite",
@@ -302,8 +339,8 @@ function render(ghosts) {
         row.style.animationDelay = `${index * 0.1}s`;
 
         row.innerHTML = `
-            <td><strong>${ghost.name}</strong></td>
-            <td>${ghost.evidence.map(evidence => `<span class="badge">${evidence}</span>`).join('')}</td>
+            <td><strong>${GHOST_NAMES_TRANSLATIONS[ghost.name] || ghost.name}</strong></td>
+            <td>${ghost.evidence.map(evidence => `<span class="badge">${EVIDENCE_TRANSLATIONS[evidence] || evidence}</span>`).join('')}</td>
             <td>${ghost.traits.join(', ')}</td>
             <td>${formatHints(ghost.hints)}</td>
         `;
@@ -322,7 +359,9 @@ function filterGhosts() {
         .map(checkbox => checkbox.value);
 
     let filtered = GHOSTS.filter(ghost => {
+        const ghostNameFrench = GHOST_NAMES_TRANSLATIONS[ghost.name] || ghost.name;
         const matchesSearch = ghost.name.toLowerCase().includes(searchTerm) ||
+            ghostNameFrench.toLowerCase().includes(searchTerm) ||
             ghost.evidence.some(evidence => evidence.toLowerCase().includes(searchTerm)) ||
             ghost.traits.some(trait => trait.toLowerCase().includes(searchTerm)) ||
             ghost.hints.some(hint => hint.toLowerCase().includes(searchTerm));
@@ -376,8 +415,8 @@ function exportToCSV() {
     const csvContent = [
         headers.join(','),
         ...currentList.map(ghost => [
-            ghost.name,
-            `"${ghost.evidence.join('; ')}"`,
+            GHOST_NAMES_TRANSLATIONS[ghost.name] || ghost.name,
+            `"${ghost.evidence.map(evidence => EVIDENCE_TRANSLATIONS[evidence] || evidence).join('; ')}"`,
             `"${ghost.traits.join('; ')}"`,
             `"${ghost.hints.join('; ')}"`
         ].join(','))
@@ -413,9 +452,10 @@ function createEvidenceFilters() {
 
     allEvidence.forEach(evidence => {
         const label = document.createElement('label');
+        const translatedEvidence = EVIDENCE_TRANSLATIONS[evidence] || evidence;
         label.innerHTML = `
             <input type="checkbox" value="${evidence}">
-            ${evidence}
+            ${translatedEvidence}
         `;
         evidenceFilters.appendChild(label);
     });
