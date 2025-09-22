@@ -1,42 +1,55 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Guide des Fantômes - Phasmophobia</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="container">
-    <h1>Guide des Fantômes - Phasmophobia</h1>
-    <p class="lead">Tableau interactif : recherche, tri, filtrage par preuve et export CSV / impression.</p>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>👻 Guide des Fantômes - Phasmophobia</h1>
+      <p class="lead">
+        Tableau interactif : recherche, tri, filtrage par preuve et export CSV /
+        impression.
+      </p>
 
-
-    <div class="controls">
-        <input type="text" id="search" placeholder="Rechercher un fantôme, preuve ou mot-clé...">
+      <div class="controls">
+        <input
+          type="text"
+          id="search"
+          placeholder="🔍 Rechercher un fantôme, preuve ou mot-clé..."
+        />
         <div id="evidenceFilters" class="checkbox-group"></div>
-        <button id="reset">Réinitialiser</button>
-        <button id="export">Exporter CSV</button>
-        <button id="print" class="secondary">Imprimer / PDF</button>
-    </div>
+        <button id="reset">🔄 Réinitialiser</button>
+        <button id="export">📊 Exporter CSV</button>
+        <button id="print" class="secondary">🖨️ Imprimer / PDF</button>
+      </div>
 
-
-    <div class="card">
+      <div class="card">
         <table id="ghostTable">
-            <thead>
+          <thead>
             <tr>
-                <th class="sortable" data-key="name">Fantôme</th>
-                <th class="sortable" data-key="evidence">Preuves</th>
-                <th class="sortable" data-key="traits">Caractéristiques</th>
-                <th class="sortable" data-key="hints">Indices pratiques</th>
+              <th class="sortable" data-key="name">👻 Fantôme</th>
+              <th class="sortable" data-key="evidence">🔍 Preuves</th>
+              <th class="sortable" data-key="traits">⚡ Caractéristiques</th>
+              <th class="sortable" data-key="hints">💡 Indices pratiques</th>
             </tr>
-            </thead>
-            <tbody></tbody>
+          </thead>
+          <tbody></tbody>
         </table>
+      </div>
     </div>
-</div>
 
-
-<script src="script.js"></script>
-</body>
+    <script src="cursor.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>

@@ -1,141 +1,460 @@
 const GHOSTS = [
-    {name: 'Esprit', evidence: 'EMF 5, Spirit Box, Écriture', traits: 'Aucune capacité spéciale, encens efficace longtemps', hints: 'Encens repousse plus longtemps → Esprit'},
-    {name: 'Spectre', evidence: 'EMF 5, Spirit Box, D.O.T.S', traits: "Peut traverser murs/portes, ne laisse pas d'empreintes dans le sel", hints: "Pas d'empreintes sur le sel → Spectre"},
-    {name: 'Poltergeist', evidence: 'Spirit Box, Empreintes, Écriture', traits: "Lance beaucoup d'objets à la fois", hints: 'Objets projetés fréquemment → Poltergeist'},
-    {name: 'Banshee', evidence: 'Orbes, Empreintes, D.O.T.S', traits: 'Cible une seule personne, cri distinct au micro parabolique', hints: 'Un joueur constamment ciblé → Banshee'},
-    {name: 'Jinn', evidence: 'EMF 5, Empreintes, Températures glaciales', traits: 'Rapide si joueur loin, aime le courant', hints: 'Rapide quand courant allumé → Jinn'},
-    {name: 'Mare', evidence: 'Spirit Box, Orbes, Écriture', traits: "Plus agressif dans l'obscurité, éteint souvent les lumières", hints: 'Lumières éteintes souvent → Mare'},
-    {name: 'Revenant', evidence: 'Orbes, Écriture, Températures glaciales', traits: "Lent hors chasse, très rapide s'il te voit", hints: 'Vitesse changeante pendant chasse → Revenant'},
-    {name: 'Ombre', evidence: 'EMF 5, Écriture, Températures glaciales', traits: 'Moins actif en groupe', hints: "Peu d'activité en multi → Ombre"},
-    {name: 'Démon', evidence: 'Empreintes, Écriture, Températures glaciales', traits: "Peut attaquer très tôt, crucifix efficace", hints: 'Attaques précoces → Démon'},
-    {name: 'Yurei', evidence: 'Orbes, Températures glaciales, D.O.T.S', traits: 'Vide la santé mentale rapidement, ferme les portes', hints: 'Sanité chute vite, portes claquent → Yurei'},
-    {name: 'Oni', evidence: 'EMF 5, Empreintes, D.O.T.S', traits: 'Très actif, visible longtemps', hints: 'Apparitions fréquentes → Oni'},
-    {name: 'Yokai', evidence: 'Spirit Box, Orbes, D.O.T.S', traits: 'Déclenche chasses si on parle près de lui', hints: 'Micro provoque attaque → Yokai'},
-    {name: 'Hantu', evidence: 'Orbes, Empreintes, Températures glaciales', traits: 'Plus rapide dans le froid', hints: 'Chasse rapide en zones froides → Hantu'},
-    {name: 'Goryo', evidence: 'EMF 5, Empreintes, D.O.T.S', traits: 'D.O.T.S visibles seulement via caméra', hints: 'D.O.T.S uniquement caméra → Goryo'},
-    {name: 'Myling', evidence: 'EMF 5, Empreintes, Écriture', traits: 'Bruits de pas faibles/absents pendant chasse', hints: 'Silence en chasse → Myling'},
-    {name: 'Onryo', evidence: 'Spirit Box, Orbes, Températures glaciales', traits: "Attiré par le feu, éteint bougies", hints: "Bougies qui s'éteignent → Onryo"},
-    {name: 'Les Jumeaux', evidence: 'EMF 5, Spirit Box, Températures glaciales', traits: "Activité à deux endroits", hints: 'Interactions doubles → Jumeaux'},
-    {name: 'Raiju', evidence: 'EMF 5, Orbes, D.O.T.S', traits: "Plus actif près des appareils électriques", hints: 'Chasse rapide avec appareils allumés → Raiju'},
-    {name: 'Obake', evidence: 'EMF 5, Empreintes, Orbes', traits: 'Empreintes particulières (6 doigts)', hints: 'Empreintes inhabituelles → Obake'},
-    {name: 'Mimic', evidence: 'Spirit Box, Empreintes, Températures glaciales, Orbes', traits: "Imite d'autres fantômes (peut avoir 4 preuves)", hints: 'Toujours 4 preuves possibles → Mimic'},
-    {name: 'Moroi', evidence: 'Spirit Box, Écriture, Températures glaciales', traits: 'Fait baisser la sanité après Spirit Box', hints: 'Sanité chute rapide après Spirit Box → Moroi'},
-    {name: 'Deogen', evidence: 'Spirit Box, Écriture, D.O.T.S', traits: 'Te trouve souvent, ralentit proche', hints: 'Trouve toujours un joueur → Deogen'},
-    {name: 'Thaye', evidence: 'Orbes, Écriture, D.O.T.S', traits: 'Très actif au début puis moins', hints: "Beaucoup d'activité puis baisse → Thaye"}
+    {
+        name: "Spirit",
+        evidence: ["EMF 5", "Spirit Box", "Writing"],
+        traits: ["Aucune capacité spéciale", "Très agressif", "Peut chasser tôt"],
+        hints: [
+            "💀 Chasse tôt : Il peut te chasser dès 50% de santé mentale",
+            "⚡ Super agressif : Il chasse plus souvent que les autres",
+            "🔍 Détection : Utilise le Spirit Box pour le confirmer",
+            "📝 Écriture : Regarde dans le livre d'écriture pour des messages",
+            "📡 EMF 5 : Le détecteur EMF doit montrer 5 pour confirmer"
+        ]
+    },
+    {
+        name: "Wraith",
+        evidence: ["EMF 5", "Spirit Box", "DOTS"],
+        traits: ["Ne laisse pas d'empreintes", "Peut traverser les murs", "Téléportation"],
+        hints: [
+            "👻 Téléportation : Il peut apparaître n'importe où sur la carte",
+            "🚫 Pas d'empreintes : Il ne laisse pas d'empreintes dans le sel",
+            "🧱 Traverse les murs : Il peut passer à travers les obstacles",
+            "📡 EMF 5 : Confirme avec le détecteur EMF",
+            "📺 DOTS : Utilise la caméra DOTS pour le voir bouger"
+        ]
+    },
+    {
+        name: "Phantom",
+        evidence: ["Spirit Box", "Fingerprints", "DOTS"],
+        traits: ["Disparaît quand photographié", "Réduit la santé mentale", "Invisible"],
+        hints: [
+            "📸 Photo: Il disparaît quand tu le prends en photo",
+            "🧠 Santé mentale: Il fait chuter ta santé mentale plus vite",
+            "👁️ Invisible: Il est plus dur à voir pendant les chasses",
+            "🔍 Spirit Box: Utilise-le pour confirmer sa présence",
+            "👆 Empreintes: Il laisse des empreintes sur les surfaces"
+        ]
+    },
+    {
+        name: "Poltergeist",
+        evidence: ["Spirit Box", "Fingerprints", "Writing"],
+        traits: ["Lance des objets", "Plus d'activité avec objets", "Chasse si objets manquants"],
+        hints: [
+            "🎯 Objets: Il lance des objets pour créer de l'activité",
+            "📦 Plus d'objets = plus d'activité: Mets des objets dans la pièce",
+            "⚠️ Objets manquants: Il peut chasser si tu retires des objets",
+            "🔍 Spirit Box: Il répond aux questions que tu poses",
+            "📝 Écriture: Il laisse des messages dans le livre"
+        ]
+    },
+    {
+        name: "Banshee",
+        evidence: ["EMF 5", "Fingerprints", "DOTS"],
+        traits: ["Cible une personne", "Cri perçant", "Chasse à 50% santé mentale"],
+        hints: [
+            "🎯 Cible unique: Il se concentre sur un seul joueur",
+            "😱 Cri: Il pousse un cri perçant qu'on entend de loin",
+            "💀 Chasse tôt: Il peut te chasser dès 50% de santé mentale",
+            "📡 EMF 5: Le détecteur EMF confirme sa présence",
+            "👆 Empreintes: Il laisse des traces sur les surfaces"
+        ]
+    },
+    {
+        name: "Jinn",
+        evidence: ["EMF 5", "Fingerprints", "Freezing"],
+        traits: ["Vitesse normale si fusible allumé", "Vitesse rapide si fusible éteint", "Peut couper l'électricité"],
+        hints: [
+            "⚡ Fusible: Il est plus rapide si le fusible est éteint",
+            "🔌 Électricité: Il peut couper l'électricité",
+            "🏃 Vitesse: Regarde l'état du fusible pour prédire sa vitesse",
+            "❄️ Gel: La température descend en dessous de 0°C",
+            "📡 EMF 5: Confirme avec le détecteur EMF"
+        ]
+    },
+    {
+        name: "Mare",
+        evidence: ["Spirit Box", "Writing", "Freezing"],
+        traits: ["Plus d'activité dans l'obscurité", "Moins d'activité avec lumière", "Peut éteindre les lumières"],
+        hints: [
+            "🌙 Obscurité: Il est plus actif quand les lumières sont éteintes",
+            "💡 Lumière: Il est moins actif avec les lumières allumées",
+            "🔌 Éteint les lumières: Il peut éteindre les interrupteurs",
+            "🔍 Spirit Box: Utilise-le dans l'obscurité",
+            "❄️ Gel: Il fait très froid dans sa pièce"
+        ]
+    },
+    {
+        name: "Revenant",
+        evidence: ["EMF 5", "Writing", "Freezing"],
+        traits: ["Vitesse lente si personne visible", "Vitesse rapide si personne visible", "Chasse fréquente"],
+        hints: [
+            "👁️ Vision: Il est plus rapide quand il te voit",
+            "🐌 Lent: Il est très lent quand personne n'est visible",
+            "🏃 Rapide: Il est ultra-rapide quand il voit quelqu'un",
+            "💀 Chasse souvent: Il chasse plus souvent que les autres",
+            "📝 Écriture: Il laisse des messages dans le livre"
+        ]
+    },
+    {
+        name: "Shade",
+        evidence: ["EMF 5", "Writing", "Freezing"],
+        traits: ["Timide", "Moins d'activité avec plusieurs personnes", "Chasse rare"],
+        hints: [
+            "😰 Timide: Il est moins actif quand vous êtes plusieurs",
+            "👥 Groupe: Reste seul dans la pièce pour plus d'activité",
+            "💀 Chasse rare: Il chasse moins souvent que les autres",
+            "📡 EMF 5: Confirme avec le détecteur EMF",
+            "❄️ Gel: Il fait très froid dans sa pièce"
+        ]
+    },
+    {
+        name: "Demon",
+        evidence: ["Fingerprints", "Writing", "Freezing"],
+        traits: ["Chasse très agressive", "Peut chasser à 70% santé mentale", "Moins de temps entre chasses"],
+        hints: [
+            "😈 Super agressif: Il chasse très agressivement",
+            "💀 Chasse tôt: Il peut te chasser dès 70% de santé mentale",
+            "⏱️ Chasse souvent: Il y a moins de temps entre les chasses",
+            "👆 Empreintes: Il laisse des traces sur les surfaces",
+            "📝 Écriture: Il laisse des messages dans le livre"
+        ]
+    },
+    {
+        name: "Yurei",
+        evidence: ["Spirit Box", "Writing", "Freezing"],
+        traits: ["Réduit la santé mentale", "Ferme les portes", "Moins d'activité"],
+        hints: [
+            "🧠 Santé mentale: Il fait chuter ta santé mentale plus vite",
+            "🚪 Portes: Il peut fermer les portes tout seul",
+            "😴 Moins d'activité: Il génère moins d'événements paranormaux",
+            "🔍 Spirit Box: Utilise-le pour confirmer sa présence",
+            "❄️ Gel: Il fait très froid dans sa pièce"
+        ]
+    },
+    {
+        name: "Oni",
+        evidence: ["EMF 5", "Spirit Box", "DOTS"],
+        traits: ["Plus d'activité", "Lance des objets plus loin", "Visible pendant les chasses"],
+        hints: [
+            "⚡ Hyper actif: Il génère beaucoup d'événements paranormaux",
+            "🎯 Objets: Il lance des objets plus loin que les autres",
+            "👁️ Visible: Il est plus facile à voir pendant les chasses",
+            "📡 EMF 5: Le détecteur EMF confirme sa présence",
+            "📺 DOTS: Utilise la caméra DOTS pour le voir"
+        ]
+    },
+    {
+        name: "Yokai",
+        evidence: ["Spirit Box", "Writing", "DOTS"],
+        traits: ["Entend les conversations", "Moins d'activité si on parle", "Chasse si on parle près de lui"],
+        hints: [
+            "👂 Audition: Il entend vos conversations",
+            "🤫 Silence: Il est moins actif si tu parles près de lui",
+            "💀 Chasse: Il peut chasser si tu parles trop près",
+            "🔍 Spirit Box: Utilise-le pour confirmer sa présence",
+            "📺 DOTS: Utilise la caméra DOTS pour le voir"
+        ]
+    },
+    {
+        name: "Hantu",
+        evidence: ["Fingerprints", "Freezing", "DOTS"],
+        traits: ["Plus rapide dans le froid", "Plus lent dans la chaleur", "Peut geler les pièces"],
+        hints: [
+            "❄️ Froid: Il est plus rapide dans les pièces froides",
+            "🔥 Chaleur: Il est plus lent dans les pièces chaudes",
+            "🌡️ Température: Il peut geler les pièces qu'il traverse",
+            "👆 Empreintes: Il laisse des traces sur les surfaces",
+            "📺 DOTS: Utilise la caméra DOTS pour le voir"
+        ]
+    },
+    {
+        name: "Goryo",
+        evidence: ["EMF 5", "Fingerprints", "DOTS"],
+        traits: ["Ne sort pas de sa pièce", "Visible seulement via DOTS", "Rare"],
+        hints: [
+            "🏠 Pièce: Il ne quitte jamais sa pièce d'origine",
+            "📺 DOTS uniquement: Il est visible seulement via la caméra DOTS",
+            "📡 EMF 5: Le détecteur EMF confirme sa présence",
+            "👆 Empreintes: Il laisse des traces dans sa pièce",
+            "🔍 Rare: Il est très difficile à identifier"
+        ]
+    },
+    {
+        name: "Myling",
+        evidence: ["EMF 5", "Writing", "Freezing"],
+        traits: ["Chuchotements silencieux", "Chasse silencieuse", "Plus d'activité audio"],
+        hints: [
+            "🤫 Silencieux: Il chuchote très silencieusement",
+            "👻 Chasse silencieuse: Il chasse sans faire de bruit",
+            "🔊 Audio: Il génère plus d'événements audio",
+            "📡 EMF 5: Le détecteur EMF confirme sa présence",
+            "❄️ Gel: Il fait très froid dans sa pièce"
+        ]
+    },
+    {
+        name: "Onryo",
+        evidence: ["Spirit Box", "Freezing", "DOTS"],
+        traits: ["Chasse si flamme éteinte", "Moins d'activité avec flamme", "Peut éteindre les flammes"],
+        hints: [
+            "🕯️ Flamme: Chasse si une flamme est éteinte",
+            "🔥 Protection: Moins d'activité avec une flamme allumée",
+            "💨 Éteint: Peut éteindre les bougies et allumettes",
+            "🔍 Spirit Box: Utilisez-le pour confirmer sa présence",
+            "📺 DOTS: Utilisez la caméra DOTS pour le voir"
+        ]
+    },
+    {
+        name: "The Twins",
+        evidence: ["EMF 5", "Spirit Box", "Freezing"],
+        traits: ["Deux entités", "Interactions différentes", "Vitesse variable"],
+        hints: [
+            "👥 Deux fantômes: Deux entités qui agissent ensemble",
+            "⚡ Interactions: Réagit différemment aux interactions",
+            "🏃 Vitesse: Vitesse de chasse variable",
+            "📡 EMF 5: Le détecteur EMF confirme sa présence",
+            "🔍 Spirit Box: Utilisez-le pour confirmer sa présence"
+        ]
+    },
+    {
+        name: "Raiju",
+        evidence: ["EMF 5", "DOTS", "Freezing"],
+        traits: ["Vitesse rapide près d'électronique", "Vitesse normale loin d'électronique", "Peut couper l'électricité"],
+        hints: [
+            "📱 Électronique: Plus rapide près des appareils électroniques",
+            "🔌 Électricité: Peut couper l'alimentation électrique",
+            "🏃 Vitesse: Vitesse variable selon la proximité d'électronique",
+            "📡 EMF 5: Le détecteur EMF confirme sa présence",
+            "📺 DOTS: Utilisez la caméra DOTS pour le voir"
+        ]
+    },
+    {
+        name: "Obake",
+        evidence: ["EMF 5", "Fingerprints", "DOTS"],
+        traits: ["Change de forme", "Empreintes qui disparaissent", "Six doigts"],
+        hints: [
+            "🔄 Forme: Change de forme et d'apparence",
+            "👆 Empreintes: Les empreintes peuvent disparaître rapidement",
+            "🖐️ Six doigts: Peut laisser des empreintes à six doigts",
+            "📡 EMF 5: Le détecteur EMF confirme sa présence",
+            "📺 DOTS: Utilisez la caméra DOTS pour le voir"
+        ]
+    },
+    {
+        name: "The Mimic",
+        evidence: ["Spirit Box", "Fingerprints", "Freezing"],
+        traits: ["Copie d'autres fantômes", "Preuve fantôme", "Comportement changeant"],
+        hints: [
+            "🔄 Copie: Copie le comportement d'autres fantômes",
+            "👻 Preuve fantôme: Peut montrer des preuves d'autres fantômes",
+            "🎭 Changeant: Son comportement change constamment",
+            "🔍 Spirit Box: Utilisez-le pour confirmer sa présence",
+            "👆 Empreintes: Laisse des traces sur les surfaces"
+        ]
+    },
+    {
+        name: "Moroi",
+        evidence: ["Spirit Box", "Writing", "Freezing"],
+        traits: ["Santé mentale réduite", "Vitesse rapide si santé mentale basse", "Chasse fréquente"],
+        hints: [
+            "🧠 Santé mentale: Réduit la santé mentale plus rapidement",
+            "🏃 Vitesse: Plus rapide si la santé mentale est basse",
+            "💀 Chasse fréquente: Chasse plus souvent que les autres",
+            "🔍 Spirit Box: Utilisez-le pour confirmer sa présence",
+            "📝 Écriture: Laisse des messages dans le livre"
+        ]
+    },
+    {
+        name: "Deogen",
+        evidence: ["Spirit Box", "Writing", "DOTS"],
+        traits: ["Toujours sait où vous êtes", "Vitesse lente", "Chasse fréquente"],
+        hints: [
+            "👁️ Omniscient: Sait toujours où se trouvent les joueurs",
+            "🐌 Lent: Très lent pendant les chasses",
+            "💀 Chasse fréquente: Chasse plus souvent que les autres",
+            "🔍 Spirit Box: Utilisez-le pour confirmer sa présence",
+            "📺 DOTS: Utilisez la caméra DOTS pour le voir"
+        ]
+    },
+    {
+        name: "Thaye",
+        evidence: ["Writing", "Freezing", "DOTS"],
+        traits: ["Vieillit avec le temps", "Moins d'activité avec l'âge", "Vitesse réduite avec l'âge"],
+        hints: [
+            "⏰ Vieillit: Devient moins actif avec le temps",
+            "😴 Moins d'activité: Génère moins d'événements en vieillissant",
+            "🐌 Vitesse: Devient plus lent avec l'âge",
+            "📝 Écriture: Laisse des messages dans le livre",
+            "📺 DOTS: Utilisez la caméra DOTS pour le voir"
+        ]
+    }
 ];
 
-const tbody = document.querySelector('#ghostTable tbody');
-const searchInput = document.getElementById('search');
-const evidenceFilters = document.getElementById('evidenceFilters');
+let currentList = [];
+let sortConfig = { key: null, direction: 'asc' };
 
-// Génère la liste de toutes les preuves disponibles
-const evidenceSet = new Set();
-GHOSTS.forEach(g => g.evidence.split(',').map(x => x.trim()).forEach(e => evidenceSet.add(e)));
-
-// Crée les cases à cocher
-Array.from(evidenceSet).sort().forEach(e => {
-    const label = document.createElement('label');
-    label.innerHTML = `<input type="checkbox" value="${e}"> ${e}`;
-    evidenceFilters.appendChild(label);
-});
-
-function escapeHtml(str) {
-    return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
-function formatBadges(evid) {
-    return evid.split(',').map(x => '<span class="badge">' + escapeHtml(x.trim()) + '</span>').join(' ');
-}
-
-function render(list) {
+function render(ghosts) {
+    const tbody = document.querySelector('#ghostTable tbody');
     tbody.innerHTML = '';
-    list.forEach(g => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td><strong>${escapeHtml(g.name)}</strong></td><td>${formatBadges(g.evidence)}</td><td>${escapeHtml(g.traits)}</td><td class="small">${escapeHtml(g.hints)}</td>`;
-        tbody.appendChild(tr);
+
+    ghosts.forEach((ghost, index) => {
+        const row = document.createElement('tr');
+        row.className = 'fade-in';
+        row.style.animationDelay = `${index * 0.1}s`;
+
+        row.innerHTML = `
+            <td><strong>${ghost.name}</strong></td>
+            <td>${ghost.evidence.map(evidence => `<span class="badge">${evidence}</span>`).join('')}</td>
+            <td>${ghost.traits.join(', ')}</td>
+            <td>${formatHints(ghost.hints)}</td>
+        `;
+
+        tbody.appendChild(row);
     });
 }
 
-function applyFilters() {
-    const q = searchInput.value.trim().toLowerCase();
+function formatHints(hints) {
+    return hints.map(hint => `<div class="hint-item">${hint}</div>`).join('');
+}
 
-    // Récupère toutes les preuves cochées
-    const selected = Array.from(evidenceFilters.querySelectorAll('input:checked')).map(cb => cb.value);
+function filterGhosts() {
+    const searchTerm = document.getElementById('search').value.toLowerCase();
+    const selectedEvidence = Array.from(document.querySelectorAll('#evidenceFilters input:checked'))
+        .map(checkbox => checkbox.value);
 
-    let filtered = GHOSTS.filter(g => {
-        const hay = (g.name + ' ' + g.evidence + ' ' + g.traits + ' ' + g.hints).toLowerCase();
+    let filtered = GHOSTS.filter(ghost => {
+        const matchesSearch = ghost.name.toLowerCase().includes(searchTerm) ||
+            ghost.evidence.some(evidence => evidence.toLowerCase().includes(searchTerm)) ||
+            ghost.traits.some(trait => trait.toLowerCase().includes(searchTerm)) ||
+            ghost.hints.some(hint => hint.toLowerCase().includes(searchTerm));
 
-        // Le fantôme doit contenir toutes les preuves cochées
-        if (selected.length && !selected.every(ev => g.evidence.includes(ev))) return false;
+        const matchesEvidence = selectedEvidence.length === 0 ||
+            selectedEvidence.every(evidence => ghost.evidence.includes(evidence));
 
-        if (!q) return true;
-        return hay.includes(q);
+        return matchesSearch && matchesEvidence;
     });
 
-    render(filtered);
     currentList = filtered;
+    render(filtered);
 }
 
-let sortKey = null;
-let sortDir = 1;
-let currentList = GHOSTS.slice();
+function sortTable(key) {
+    if (sortConfig.key === key) {
+        sortConfig.direction = sortConfig.direction === 'asc' ? 'desc' : 'asc';
+    } else {
+        sortConfig.key = key;
+        sortConfig.direction = 'asc';
+    }
 
-document.querySelectorAll('th.sortable').forEach(th => {
-    th.addEventListener('click', () => {
-        const key = th.dataset.key;
-        if (sortKey === key) {
-            sortDir = -sortDir;
-        } else {
-            sortKey = key;
-            sortDir = 1;
+    currentList.sort((a, b) => {
+        let aVal = a[key];
+        let bVal = b[key];
+
+        if (key === 'evidence' || key === 'traits' || key === 'hints') {
+            aVal = Array.isArray(aVal) ? aVal.join(' ') : aVal;
+            bVal = Array.isArray(bVal) ? bVal.join(' ') : bVal;
         }
-        document.querySelectorAll('th.sortable').forEach(x => x.classList.remove('asc', 'desc'));
-        th.classList.add(sortDir === 1 ? 'asc' : 'desc');
-        currentList.sort((a, b) => {
-            const A = (a[key] || '').toLowerCase();
-            const B = (b[key] || '').toLowerCase();
-            return A.localeCompare(B) * sortDir;
-        });
-        render(currentList);
-    });
-});
 
-function toCSV(list) {
-    const rows = [["Fantôme", "Preuves", "Caractéristiques", "Indices pratiques"]];
-    list.forEach(g => rows.push([g.name, g.evidence, g.traits, g.hints]));
-    return rows.map(r => r.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
+        if (sortConfig.direction === 'asc') {
+            return aVal > bVal ? 1 : -1;
+        } else {
+            return aVal < bVal ? 1 : -1;
+        }
+    });
+
+    document.querySelectorAll('th.sortable').forEach(th => {
+        th.classList.remove('asc', 'desc');
+    });
+
+    const activeTh = document.querySelector(`th[data-key="${key}"]`);
+    activeTh.classList.add(sortConfig.direction);
+
+    render(currentList);
 }
 
-document.getElementById('export').addEventListener('click', () => {
-    const csv = toCSV(currentList);
-    const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+function exportToCSV() {
+    const headers = ['Fantôme', 'Preuves', 'Caractéristiques', 'Indices pratiques'];
+    const csvContent = [
+        headers.join(','),
+        ...currentList.map(ghost => [
+            ghost.name,
+            `"${ghost.evidence.join('; ')}"`,
+            `"${ghost.traits.join('; ')}"`,
+            `"${ghost.hints.join('; ')}"`
+        ].join(','))
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'Phasmophobia_Fantomes.csv';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-});
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'phantoms_guide.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
-document.getElementById('print').addEventListener('click', () => {
+function printTable() {
     window.print();
-});
+}
 
-document.getElementById('reset').addEventListener('click', () => {
-    searchInput.value = '';
-    evidenceFilters.querySelectorAll('input:checked').forEach(cb => cb.checked = false);
+function resetFilters() {
+    document.getElementById('search').value = '';
+    document.querySelectorAll('#evidenceFilters input').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    currentList = GHOSTS.slice();
+    render(currentList);
+}
+
+function createEvidenceFilters() {
+    const evidenceFilters = document.getElementById('evidenceFilters');
+    const allEvidence = [...new Set(GHOSTS.flatMap(ghost => ghost.evidence))];
+
+    allEvidence.forEach(evidence => {
+        const label = document.createElement('label');
+        label.innerHTML = `
+            <input type="checkbox" value="${evidence}">
+            ${evidence}
+        `;
+        evidenceFilters.appendChild(label);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    createEvidenceFilters();
+
+    document.getElementById('search').addEventListener('input', filterGhosts);
+    document.getElementById('evidenceFilters').addEventListener('change', filterGhosts);
+    document.getElementById('reset').addEventListener('click', resetFilters);
+    document.getElementById('export').addEventListener('click', exportToCSV);
+    document.getElementById('print').addEventListener('click', printTable);
+
+    document.querySelectorAll('th.sortable').forEach(th => {
+        th.addEventListener('click', () => sortTable(th.dataset.key));
+    });
+
+    document.getElementById('export').addEventListener('click', function () {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = 'scale(1)';
+        }, 150);
+    });
+
+    document.getElementById('print').addEventListener('click', function () {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = 'scale(1)';
+        }, 150);
+    });
+
+    document.getElementById('reset').addEventListener('click', function () {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = 'scale(1)';
+        }, 150);
+    });
+
     render(GHOSTS);
     currentList = GHOSTS.slice();
-    document.querySelectorAll('th.sortable').forEach(x => x.classList.remove('asc', 'desc'));
-    sortKey = null;
-    sortDir = 1;
 });
-
-searchInput.addEventListener('input', applyFilters);
-evidenceFilters.addEventListener('change', applyFilters);
-
-// Initialisation
-render(GHOSTS);
-currentList = GHOSTS.slice();
