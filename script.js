@@ -433,9 +433,6 @@ function exportToCSV() {
     document.body.removeChild(link);
 }
 
-function printTable() {
-    window.print();
-}
 
 function resetFilters() {
     document.getElementById('search').value = '';
@@ -468,7 +465,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('evidenceFilters').addEventListener('change', filterGhosts);
     document.getElementById('reset').addEventListener('click', resetFilters);
     document.getElementById('export').addEventListener('click', exportToCSV);
-    document.getElementById('print').addEventListener('click', printTable);
 
     document.querySelectorAll('th.sortable').forEach(th => {
         th.addEventListener('click', () => sortTable(th.dataset.key));
@@ -481,12 +477,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 150);
     });
 
-    document.getElementById('print').addEventListener('click', function () {
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            this.style.transform = 'scale(1)';
-        }, 150);
-    });
 
     document.getElementById('reset').addEventListener('click', function () {
         this.style.transform = 'scale(0.95)';
