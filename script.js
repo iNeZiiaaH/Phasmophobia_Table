@@ -62,7 +62,7 @@ const GHOSTS = [
     },
     {
         name: "Phantom",
-        evidence: ["Ghost Orb", "Fingerprints", "DOTS"],
+        evidence: ["Spirit Box", "Fingerprints", "DOTS"],
         traits: ["Disparaît quand photographié", "Réduit la santé mentale", "Invisible"],
         hints: [
             "📸 Photo: Il disparaît quand tu le prends en photo",
@@ -98,7 +98,7 @@ const GHOSTS = [
     },
     {
         name: "Jinn",
-        evidence: ["Ghost Orb", "Fingerprints", "Freezing"],
+        evidence: ["EMF 5", "Fingerprints", "Freezing"],
         traits: ["Vitesse normale si fusible allumé", "Vitesse rapide si fusible éteint", "Peut couper l'électricité"],
         hints: [
             "⚡ Fusible: Il est plus rapide si le fusible est éteint",
@@ -122,7 +122,7 @@ const GHOSTS = [
     },
     {
         name: "Revenant",
-        evidence: ["EMF 5", "Writing", "Freezing"],
+        evidence: ["Ghost Orb", "Writing", "Freezing"],
         traits: ["Vitesse lente si personne visible", "Vitesse rapide si personne visible", "Chasse fréquente"],
         hints: [
             "👁️ Vision: Il est plus rapide quand il te voit",
@@ -134,7 +134,7 @@ const GHOSTS = [
     },
     {
         name: "Shade",
-        evidence: ["Ghost Orb", "Writing", "Freezing"],
+        evidence: ["EMF 5", "Writing", "Freezing"],
         traits: ["Timide", "Moins d'activité avec plusieurs personnes", "Chasse rare"],
         hints: [
             "😰 Timide: Il est moins actif quand vous êtes plusieurs",
@@ -158,7 +158,7 @@ const GHOSTS = [
     },
     {
         name: "Yurei",
-        evidence: ["Ghost Orb", "Writing", "Freezing"],
+        evidence: ["Ghost Orb", "DOTS", "Freezing"],
         traits: ["Réduit la santé mentale", "Ferme les portes", "Moins d'activité"],
         hints: [
             "🧠 Santé mentale: Il fait chuter ta santé mentale plus vite",
@@ -170,7 +170,7 @@ const GHOSTS = [
     },
     {
         name: "Oni",
-        evidence: ["EMF 5", "Spirit Box", "DOTS"],
+        evidence: ["EMF 5", "Freezing", "DOTS"],
         traits: ["Plus d'activité", "Lance des objets plus loin", "Visible pendant les chasses"],
         hints: [
             "⚡ Hyper actif: Il génère beaucoup d'événements paranormaux",
@@ -182,7 +182,7 @@ const GHOSTS = [
     },
     {
         name: "Yokai",
-        evidence: ["Spirit Box", "Writing", "DOTS"],
+        evidence: ["Spirit Box", "Ghost Orb", "DOTS"],
         traits: ["Entend les conversations", "Moins d'activité si on parle", "Chasse si on parle près de lui"],
         hints: [
             "👂 Audition: Il entend vos conversations",
@@ -194,7 +194,7 @@ const GHOSTS = [
     },
     {
         name: "Hantu",
-        evidence: ["Fingerprints", "Freezing", "DOTS"],
+        evidence: ["Fingerprints", "Freezing", "Ghost Orb"],
         traits: ["Plus rapide dans le froid", "Plus lent dans la chaleur", "Peut geler les pièces"],
         hints: [
             "❄️ Froid: Il est plus rapide dans les pièces froides",
@@ -218,7 +218,7 @@ const GHOSTS = [
     },
     {
         name: "Myling",
-        evidence: ["EMF 5", "Writing", "Freezing"],
+        evidence: ["EMF 5", "Writing", "Fingerprints"],
         traits: ["Chuchotements silencieux", "Chasse silencieuse", "Plus d'activité audio"],
         hints: [
             "🤫 Silencieux: Il chuchote très silencieusement",
@@ -230,7 +230,7 @@ const GHOSTS = [
     },
     {
         name: "Onryo",
-        evidence: ["Spirit Box", "Freezing", "DOTS"],
+        evidence: ["Spirit Box", "Freezing", "Ghost Orb"],
         traits: ["Chasse si flamme éteinte", "Moins d'activité avec flamme", "Peut éteindre les flammes"],
         hints: [
             "🕯️ Flamme: Chasse si une flamme est éteinte",
@@ -254,7 +254,7 @@ const GHOSTS = [
     },
     {
         name: "Raiju",
-        evidence: ["EMF 5", "DOTS", "Freezing"],
+        evidence: ["EMF 5", "DOTS", "Ghost Orb"],
         traits: ["Vitesse rapide près d'électronique", "Vitesse normale loin d'électronique", "Peut couper l'électricité"],
         hints: [
             "📱 Électronique: Plus rapide près des appareils électroniques",
@@ -266,7 +266,7 @@ const GHOSTS = [
     },
     {
         name: "Obake",
-        evidence: ["EMF 5", "Fingerprints", "DOTS"],
+        evidence: ["EMF 5", "Fingerprints", "Ghost Orb"],
         traits: ["Change de forme", "Empreintes qui disparaissent", "Six doigts"],
         hints: [
             "🔄 Forme: Change de forme et d'apparence",
@@ -314,7 +314,7 @@ const GHOSTS = [
     },
     {
         name: "Thaye",
-        evidence: ["Writing", "Freezing", "DOTS"],
+        evidence: ["Writing", "Ghost Orb", "DOTS"],
         traits: ["Vieillit avec le temps", "Moins d'activité avec l'âge", "Vitesse réduite avec l'âge"],
         hints: [
             "⏰ Vieillit: Devient moins actif avec le temps",
