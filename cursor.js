@@ -1,243 +1,109 @@
-class SpectacularHorrorCursor {
-    constructor() {
-        this.cursor = null;
-        this.trails = [];
-        this.particles = [];
-        this.rings = [];
-        this.mouseX = 0;
-        this.mouseY = 0;
-        this.isHovering = false;
-        this.maxParticles = 30;
-        this.animationId = null;
-        this.init();
+(function () {
+    let canvas, context;
+    let particles = [];
+    let mouseX = 0, mouseY = 0;
+    let animationId;
+
+    function init() {
+        canvas = document.createElement('canvas');
+        context = canvas.getContext('2d');
+
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '9999';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+
+        document.body.appendChild(canvas);
+
+        resize();
+
+        document.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('resize', resize);
+
+        animate();
     }
 
-    init() {
-        this.cursor = document.createElement('div');
-        this.cursor.className = 'spectacular-cursor';
-        document.body.appendChild(this.cursor);
-
-        this.cursor.style.left = '50%';
-        this.cursor.style.top = '50%';
-        this.cursor.style.transform = 'translate(-50%, -50%)';
-
-        this.createRings();
-
-        for (let i = 0; i < 10; i++) {
-            const trail = document.createElement('div');
-            trail.className = 'cursor-trail';
-            trail.style.left = '50%';
-            trail.style.top = '50%';
-            trail.style.transform = 'translate(-50%, -50%)';
-            document.body.appendChild(trail);
-            this.trails.push(trail);
-        }
-
-        this.createParticles();
-
-        document.addEventListener('mousemove', (e) => this.updatePosition(e));
-        document.addEventListener('mousedown', () => this.onClick());
-        document.addEventListener('mouseup', () => this.onRelease());
-
-        this.setupHoverEffects();
-
-        this.animate();
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     }
 
-    createRings() {
-        const ring2 = document.createElement('div');
-        ring2.className = 'cursor-ring-2';
-        this.cursor.appendChild(ring2);
-        this.rings.push(ring2);
-
-        const ring3 = document.createElement('div');
-        ring3.className = 'cursor-ring-3';
-        this.cursor.appendChild(ring3);
-        this.rings.push(ring3);
+    function onMouseMove(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
     }
 
-    createParticles() {
-        for (let i = 0; i < this.maxParticles; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'cursor-particle';
+    function createSnowflake() {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: -20,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: Math.random() + 3,
+            life: 200,
+            maxLife: 200,
+            rotation: 0,
+            rotationSpeed: (Math.random() - 0.5) * 0.03
+        });
+    }
 
-            const particleTypes = ['ghost-particle', 'blood-particle', 'energy-particle'];
-            const randomType = particleTypes[Math.floor(Math.random() * particleTypes.length)];
-            particle.classList.add(randomType);
+    function updateParticles() {
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
 
-            particle.style.left = '50%';
-            particle.style.top = '50%';
-            particle.style.transform = 'translate(-50%, -50%)';
-            particle.style.animationDelay = Math.random() * 5 + 's';
-            particle.style.animationDuration = (3 + Math.random() * 4) + 's';
+            p.x += p.vx;
+            p.y += p.vy;
+            p.rotation += p.rotationSpeed;
+            p.life--;
 
-            document.body.appendChild(particle);
-            this.particles.push(particle);
+            p.vy += 0.01;
+
+            if (p.life <= 0 || p.y > canvas.height + 20) {
+                particles.splice(i, 1);
+            }
         }
     }
 
-    updatePosition(e) {
-        this.mouseX = e.clientX;
-        this.mouseY = e.clientY;
+    function drawParticles() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
 
-        this.cursor.style.left = this.mouseX - 15 + 'px';
-        this.cursor.style.top = this.mouseY - 15 + 'px';
+        particles.forEach(p => {
+            const alpha = p.life / p.maxLife;
 
-        this.trails.forEach((trail, index) => {
-            setTimeout(() => {
-                trail.style.left = this.mouseX - 4 + 'px';
-                trail.style.top = this.mouseY - 4 + 'px';
-            }, index * 30);
-        });
+            context.save();
+            context.translate(p.x, p.y);
+            context.rotate(p.rotation);
+            context.globalAlpha = alpha;
 
-        this.updateParticles();
-    }
+            context.font = '20px Arial';
+            context.fillText('❄️', -8, 6);
 
-    updateParticles() {
-        this.particles.forEach((particle, index) => {
-            const angle = (index / this.particles.length) * Math.PI * 2;
-            const radius = 30 + Math.sin(Date.now() * 0.001 + index) * 20;
-            const x = this.mouseX + Math.cos(angle) * radius;
-            const y = this.mouseY + Math.sin(angle) * radius;
-
-            particle.style.left = x + 'px';
-            particle.style.top = y + 'px';
+            context.restore();
         });
     }
 
-    onClick() {
-        this.cursor.style.transform = 'scale(0.8)';
-        setTimeout(() => {
-            this.cursor.style.transform = 'scale(1)';
-        }, 100);
+    let lastFlakeTime = 0;
 
-        this.createSimpleRipple();
-    }
+    function animate() {
+        updateParticles();
 
-    onRelease() {
-    }
-
-    createSimpleRipple() {
-        const ripple = document.createElement('div');
-        ripple.style.position = 'fixed';
-        ripple.style.left = this.mouseX + 'px';
-        ripple.style.top = this.mouseY + 'px';
-        ripple.style.width = '0px';
-        ripple.style.height = '0px';
-        ripple.style.background = 'radial-gradient(circle, var(--accent), transparent)';
-        ripple.style.borderRadius = '50%';
-        ripple.style.pointerEvents = 'none';
-        ripple.style.zIndex = '9997';
-        ripple.style.transform = 'translate(-50%, -50%)';
-        ripple.style.transition = 'all 0.5s ease-out';
-
-        document.body.appendChild(ripple);
-
-        setTimeout(() => {
-            ripple.style.width = '100px';
-            ripple.style.height = '100px';
-            ripple.style.opacity = '0';
-        }, 10);
-
-        setTimeout(() => {
-            if (ripple.parentNode) {
-                ripple.parentNode.removeChild(ripple);
+        const now = Date.now();
+        if (now - lastFlakeTime > 200) {
+            if (particles.length < 20) {
+                createSnowflake();
+                lastFlakeTime = now;
             }
-        }, 500);
+        }
+
+        drawParticles();
+        animationId = requestAnimationFrame(animate);
     }
 
-    setupHoverEffects() {
-        document.querySelectorAll('button').forEach(button => {
-            button.addEventListener('mouseenter', () => {
-                this.isHovering = true;
-                this.cursor.style.transform = 'scale(1.5)';
-                this.cursor.style.background = 'var(--ghost-purple)';
-                this.cursor.style.borderColor = 'var(--horror-red)';
-            });
-
-            button.addEventListener('mouseleave', () => {
-                this.isHovering = false;
-                this.cursor.style.transform = 'scale(1)';
-                this.cursor.style.background = 'var(--horror-red)';
-                this.cursor.style.borderColor = 'var(--accent)';
-            });
-        });
-
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('mouseenter', () => {
-                this.cursor.style.transform = 'scale(1.3)';
-                this.cursor.style.background = 'var(--accent)';
-            });
-
-            input.addEventListener('mouseleave', () => {
-                this.cursor.style.transform = 'scale(1)';
-                this.cursor.style.background = 'var(--horror-red)';
-            });
-        });
-
-        document.querySelectorAll('th.sortable').forEach(th => {
-            th.addEventListener('mouseenter', () => {
-                this.cursor.style.transform = 'scale(1.6)';
-                this.cursor.style.background = 'var(--horror-orange)';
-            });
-
-            th.addEventListener('mouseleave', () => {
-                this.cursor.style.transform = 'scale(1)';
-                this.cursor.style.background = 'var(--horror-red)';
-            });
-        });
-
-        document.querySelectorAll('.checkbox-group label').forEach(label => {
-            label.addEventListener('mouseenter', () => {
-                this.cursor.style.transform = 'scale(1.4)';
-                this.cursor.style.background = 'var(--ghost-purple)';
-            });
-
-            label.addEventListener('mouseleave', () => {
-                this.cursor.style.transform = 'scale(1)';
-                this.cursor.style.background = 'var(--horror-red)';
-            });
-        });
-
-        document.addEventListener('mouseover', (e) => {
-            if (e.target.closest('tbody tr')) {
-                this.cursor.style.transform = 'scale(1.2)';
-                this.cursor.style.background = 'var(--accent)';
-            }
-        });
-
-        document.addEventListener('mouseout', (e) => {
-            if (e.target.closest('tbody tr')) {
-                this.cursor.style.transform = 'scale(1)';
-                this.cursor.style.background = 'var(--horror-red)';
-            }
-        });
-
-        document.addEventListener('mouseover', (e) => {
-            if (e.target.tagName === 'STRONG' && e.target.closest('tbody tr')) {
-                this.cursor.style.transform = 'scale(1.8)';
-                this.cursor.style.background = 'var(--horror-orange)';
-                this.cursor.style.borderColor = 'var(--ghost-purple)';
-            }
-        });
-
-        document.addEventListener('mouseout', (e) => {
-            if (e.target.tagName === 'STRONG' && e.target.closest('tbody tr')) {
-                this.cursor.style.transform = 'scale(1)';
-                this.cursor.style.background = 'var(--horror-red)';
-                this.cursor.style.borderColor = 'var(--accent)';
-            }
-        });
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
     }
-
-    animate() {
-        setInterval(() => {
-            this.cursor.style.transform = 'rotate(360deg)';
-            setTimeout(() => {
-                this.cursor.style.transform = 'rotate(0deg)';
-            }, 1000);
-        }, 2000);
-    }
-}
-
-const cursor = new SpectacularHorrorCursor();
+})();

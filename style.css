@@ -24,7 +24,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: none;
 }
 
 html,
@@ -43,10 +42,9 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background:
-        radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 60%, rgba(234, 88, 12, 0.1) 0%, transparent 50%);
+    background: radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(234, 88, 12, 0.1) 0%, transparent 50%);
     pointer-events: none;
     z-index: -1;
     animation: float 20s ease-in-out infinite;
@@ -64,37 +62,6 @@ body::before {
     }
 }
 
-body::after {
-    content: '';
-    position: fixed;
-    width: 15px;
-    height: 15px;
-    background: var(--accent);
-    border: 2px solid var(--horror-red);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    opacity: 0.7;
-    animation: cursorBackup 2s ease-in-out infinite;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 15px var(--accent);
-}
-
-@keyframes cursorBackup {
-
-    0%,
-    100% {
-        opacity: 0.3;
-        transform: translate(-50%, -50%) scale(1);
-    }
-
-    50% {
-        opacity: 0.6;
-        transform: translate(-50%, -50%) scale(1.1);
-    }
-}
 
 .spectacular-cursor {
     position: fixed;
@@ -106,10 +73,9 @@ body::after {
     pointer-events: none;
     z-index: 9999;
     transition: all 0.2s ease;
-    box-shadow:
-        0 0 20px var(--horror-red),
-        0 0 40px var(--accent),
-        inset 0 0 10px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 20px var(--horror-red),
+    0 0 40px var(--accent),
+    inset 0 0 10px rgba(255, 255, 255, 0.3);
     animation: cursorPulse 2s ease-in-out infinite;
 }
 
@@ -237,9 +203,8 @@ body::after {
     background: linear-gradient(45deg, var(--ghost-purple), var(--accent));
     border-radius: 50% 10% 50% 10%;
     animation: ghostFloat 6s ease-in-out infinite;
-    box-shadow:
-        0 0 15px var(--ghost-purple),
-        0 0 30px var(--accent);
+    box-shadow: 0 0 15px var(--ghost-purple),
+    0 0 30px var(--accent);
 }
 
 .cursor-particle.blood-particle {
@@ -257,9 +222,8 @@ body::after {
     background: var(--accent);
     border-radius: 50%;
     animation: energyPulse 2s ease-in-out infinite;
-    box-shadow:
-        0 0 10px var(--accent),
-        0 0 20px var(--ghost-purple);
+    box-shadow: 0 0 10px var(--accent),
+    0 0 20px var(--ghost-purple);
 }
 
 @keyframes particleOrbit {
@@ -336,18 +300,16 @@ body::after {
     100% {
         transform: scale(1);
         opacity: 0.8;
-        box-shadow:
-            0 0 10px var(--accent),
-            0 0 20px var(--ghost-purple);
+        box-shadow: 0 0 10px var(--accent),
+        0 0 20px var(--ghost-purple);
     }
 
     50% {
         transform: scale(1.5);
         opacity: 1;
-        box-shadow:
-            0 0 20px var(--accent),
-            0 0 40px var(--ghost-purple),
-            0 0 60px var(--horror-red);
+        box-shadow: 0 0 20px var(--accent),
+        0 0 40px var(--ghost-purple),
+        0 0 60px var(--horror-red);
     }
 }
 
