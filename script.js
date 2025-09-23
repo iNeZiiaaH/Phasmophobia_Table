@@ -15,7 +15,7 @@ const GHOST_NAMES_TRANSLATIONS = {
     "Poltergeist": "Poltergeist",
     "Banshee": "Banshee",
     "Jinn": "Djinn",
-    "Mare": "Mare",
+    "Mare": "Cauchemar",
     "Revenant": "Revenant",
     "Shade": "Ombre",
     "Demon": "Démon",
@@ -110,7 +110,7 @@ const GHOSTS = [
     },
     {
         name: "Mare",
-        evidence: ["Spirit Box", "Writing", "Freezing"],
+        evidence: ["Spirit Box", "Writing", "Ghost Orb"],
         traits: ["Plus d'activité dans l'obscurité", "Moins d'activité avec lumière", "Peut éteindre les lumières"],
         hints: [
             "🌙 Obscurité: Il est plus actif quand les lumières sont éteintes",
