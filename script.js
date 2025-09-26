@@ -327,7 +327,7 @@ const GHOSTS = [
 ];
 
 let currentList = [];
-let sortConfig = { key: null, direction: 'asc' };
+let sortConfig = {key: null, direction: 'asc'};
 
 function render(ghosts) {
     const tbody = document.querySelector('#ghostTable tbody');
@@ -422,7 +422,7 @@ function exportToCSV() {
         ].join(','))
     ].join('\n');
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
@@ -457,6 +457,34 @@ function createEvidenceFilters() {
         evidenceFilters.appendChild(label);
     });
 }
+
+function loadExternalScripts() {
+    const scripts = [
+        "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js",
+    ];
+
+    scripts.forEach((src) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.defer = true;
+        document.head.appendChild(script);
+    });
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadExternalScripts);
+} else {
+    loadExternalScripts();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+        mainContent.classList.remove("loading");
+        mainContent.classList.add("loaded");
+    }
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     createEvidenceFilters();

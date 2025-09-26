@@ -20,6 +20,15 @@
     --horror-orange: #ea580c;
 }
 
+.loading {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.loaded {
+    opacity: 1;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -411,14 +420,15 @@ h1 {
     color: var(--text);
     font-size: 1rem;
     backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    will-change: transform, box-shadow;
 }
 
 #search:focus {
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 20px var(--accent-light);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.01);
 }
 
 .checkbox-group {
@@ -465,13 +475,14 @@ button {
     font-weight: 600;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     box-shadow: var(--shadow);
     backdrop-filter: blur(10px);
+    will-change: transform, box-shadow;
 }
 
 button:hover {
-    transform: translateY(-3px);
+    transform: translateY(-3px) scale(1.02);
     box-shadow: var(--shadow-lg);
     background: linear-gradient(135deg, var(--accent-hover), var(--accent));
 }
@@ -490,8 +501,10 @@ button.secondary:hover {
     padding: 2rem;
     box-shadow: var(--shadow-lg);
     backdrop-filter: blur(20px);
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
+    min-height: 400px;
+    will-change: transform, box-shadow;
 }
 
 .card:hover {
@@ -556,8 +569,9 @@ td {
 }
 
 tbody tr {
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
     animation: fadeIn 0.5s ease-out;
+    will-change: background-color, transform;
 }
 
 tbody tr:hover {
@@ -585,7 +599,10 @@ tbody tr:nth-child(even):hover {
         transform: translateY(0);
     }
 }
-
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+    will-change: opacity, transform;
+}
 .badge {
     display: inline-block;
     padding: 0.25rem 0.75rem;
